@@ -21,6 +21,9 @@ public class PessoaFisica extends Pessoa {
 	
 	@Temporal(TemporalType.DATE)
 	private Date DataNascimento;
+	
+	@Column
+	private String tipoPessoa;
 
 	public String getCpf() {
 		return cpf;
@@ -36,6 +39,14 @@ public class PessoaFisica extends Pessoa {
 
 	public void setDataNascimento(Date dataNascimento) {
 		DataNascimento = dataNascimento;
+	}
+
+	public String getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
 	}
 	
 }

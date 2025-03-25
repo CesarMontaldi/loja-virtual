@@ -28,7 +28,8 @@ public class PessoaJuridica extends Pessoa {
 	
 	private String categoria;
 	
-	
+	@Column
+	private String tipoPessoa;
 
 	public String getCnpj() {
 		return cnpj;
@@ -77,6 +78,13 @@ public class PessoaJuridica extends Pessoa {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	
+
+	public String getTipoPessoa() {
+		return tipoPessoa;
+	}
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
 	
 }

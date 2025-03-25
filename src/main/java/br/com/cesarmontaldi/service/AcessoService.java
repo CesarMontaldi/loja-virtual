@@ -1,5 +1,7 @@
 package br.com.cesarmontaldi.service;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,19 @@ public class AcessoService {
 	@Autowired
 	private AcessoRepository acessoRepository;
 	
-	public void salvarAcesso(Acesso acesso) {
+	public Acesso salvarAcesso(Acesso acesso) {
 		
-		acessoRepository.save(acesso);
+		return acessoRepository.save(acesso);
+	}
+	
+	public void deletarAcesso(Long id) {
+		
+		acessoRepository.deleteById(id);
+	}
+	
+	public Acesso obterAcesso(Long id) {
+		return acessoRepository.findById(id)
+				.orElseThrow(()-> new EntityNotFoundException("Acesso não encontrado"));
 	}
 
 }
