@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.cesarmontaldi.model.Usuario;
-import br.com.cesarmontaldi.service.CorsConfig;
+import br.com.cesarmontaldi.service.CorsService;
 
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
@@ -39,12 +40,25 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 		
 		try {
 			String token = tokenService.gerarToken(authentication.getName());
-			CorsConfig.releaseCors(response);
+			CorsService.releaseCors(response);
 			response.addHeader("Authorization", token);
     		response.getWriter().write(token);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException failed) throws IOException, ServletException {
+		
+		if (failed instanceof BadCredentialsException) {
+			response.getWriter().write("Usuario e senha nao encontrado.");
+		} else {
+			response.getWriter().write(failed.getMessage());
+		}
+		
+		//super.unsuccessfulAuthentication(request, response, failed);
 	}
 
 	@Override

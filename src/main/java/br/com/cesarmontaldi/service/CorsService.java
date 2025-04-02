@@ -2,7 +2,7 @@ package br.com.cesarmontaldi.service;
 
 import javax.servlet.http.HttpServletResponse;
 
-public class CorsConfig {
+public class CorsService {
 	
 	 public static void releaseCors(HttpServletResponse response) {
 		if (response.getHeader("Access-Control-Allow-Origin") == null) {

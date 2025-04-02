@@ -38,22 +38,30 @@ public class TokenService {
         }
     }
 
-    public String getSubject(String tokenJWT) {
-        try {
-            var algoritimo = Algorithm.HMAC256(secret);
-            return JWT.require(algoritimo)
-                    .withIssuer("API Loja-Virtual")
-                    .build()
-                    .verify(tokenJWT)
-                    .getSubject();
-        } catch (JWTVerificationException exception) {
-            throw new RuntimeException("Token JWT inválido ou expirado!", exception);
-        }
+    public String getSubject(String tokenJWT) throws IOException {
+    	
+      var algoritimo = Algorithm.HMAC256(secret);
+      return JWT.require(algoritimo)
+             .withIssuer("API Loja-Virtual")
+             .build()
+             .verify(tokenJWT)
+             .getSubject();
+
+//       try {
+//            var algoritimo = Algorithm.HMAC256(secret);
+//             return JWT.require(algoritimo)
+//                    .withIssuer("API Loja-Virtual")
+//                    .build()
+//                    .verify(tokenJWT)
+//                    .getSubject();
+//       	} catch (JWTVerificationException exception) {
+//        	throw new RuntimeException("Token JWT inválido ou expirado!", exception);
+//        }
+
     }
 
     private Instant dataExpiracao() {
         return LocalDateTime.now().plusHours(24).toInstant(ZoneOffset.of("-03:00"));
     }
-
 
 }
