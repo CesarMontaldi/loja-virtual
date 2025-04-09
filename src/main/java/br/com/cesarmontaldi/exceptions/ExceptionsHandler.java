@@ -3,6 +3,8 @@ package br.com.cesarmontaldi.exceptions;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -20,13 +22,22 @@ import br.com.cesarmontaldi.model.dto.ErrorResponse;
 @RestControllerAdvice
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 	
+	@ExceptionHandler(LojaVirtualException.class)
+	public ResponseEntity<Object> handleExceptionCustom(LojaVirtualException ex) {
+		
+		ErrorResponse errorResponse = new ErrorResponse( 
+				ex.getMessage(),
+				ex.getCode());
+		
+		return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(ex.getCode()));
+	}
+	
 	@Override
 	@ExceptionHandler({Exception.class, RuntimeException.class, Throwable.class})
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 		
 		String message = "";
-		ErrorResponse errorResponse = new ErrorResponse();
 		
 		
 		if (ex instanceof MethodArgumentNotValidException) {
@@ -39,33 +50,42 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 			message = ex.getMessage();
 		}
 		
-		errorResponse.setError(message);
-		errorResponse.setCode(status.value() + " ==> " + status.getReasonPhrase());
-		
+		ErrorResponse errorResponse = new ErrorResponse(message, status.value());
+	
 		ex.printStackTrace();
 		
 		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<Object> entityNotFoundException(EntityNotFoundException ex) {
+		
+		ErrorResponse errorResponse = new ErrorResponse( 
+				ex.getMessage(),
+				HttpStatus.NOT_FOUND.value());
+		
+		return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(HttpStatus.NOT_FOUND.value()));
 	}
 	
 	@ExceptionHandler({DataIntegrityViolationException.class, ConstraintViolationException.class, SQLException.class})
 	protected ResponseEntity<Object> handleExceptionDataIntegry(Exception ex) {
 		
 		String message = "";
-		ErrorResponse errorResponse = new ErrorResponse();
 		
 		if (ex instanceof SQLException) {
 			message = "Erro de SQL no banco: " + ((SQLException)ex).getCause().getCause().getMessage();
 		
-	    }else if (ex instanceof DataIntegrityViolationException) {
+	    } else if (ex instanceof DataIntegrityViolationException) {
 			message = "Erro de integridade no banco: " + ((DataIntegrityViolationException)ex).getCause().getCause().getMessage();
 		
-		}else if (ex instanceof ConstraintViolationException) {
+		} else if (ex instanceof ConstraintViolationException) {
 			message = "Erro de chave estrangeira: " + ((ConstraintViolationException)ex).getCause().getCause().getMessage();
-		}
-			message = ex.getMessage();
 		
-		errorResponse.setError(message);
-		errorResponse.setCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+		} else {
+			message = ex.getMessage();
+		}
+		
+		ErrorResponse errorResponse = new ErrorResponse(message, HttpStatus.INTERNAL_SERVER_ERROR.value());
 		
 		ex.printStackTrace();
 		

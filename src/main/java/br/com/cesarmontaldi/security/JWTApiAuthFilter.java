@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,6 +56,9 @@ public JWTApiAuthFilter(TokenService tokenService, UsuarioRepository usuarioRepo
         }
         catch (JWTVerificationException e) {
         	response.getWriter().write("Token JWT invalido ou expirado!");
+        }
+        catch (Exception e) {
+        	response.getWriter().write("Ocorreu um erro no sistema, avise o administrador: \n" + e.getMessage());
         }
 
     }
