@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -44,6 +45,11 @@ public class NotaFiscalVenda  implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "venda_compra_loja_virtual_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compra_loja_virtual_fk"))
 	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
+	
+	@ManyToOne(targetEntity = Pessoa.class)
+	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
+	private Pessoa empresa;
+	
 
 	public Long getId() {
 		return id;
@@ -91,6 +97,14 @@ public class NotaFiscalVenda  implements Serializable {
 
 	public void setPdf(String pdf) {
 		this.pdf = pdf;
+	}
+	
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+	
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override

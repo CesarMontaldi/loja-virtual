@@ -1,7 +1,5 @@
 package br.com.cesarmontaldi;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.cesarmontaldi.controller.AcessoController;
 import br.com.cesarmontaldi.model.Acesso;
 import br.com.cesarmontaldi.repository.AcessoRepository;
-import br.com.cesarmontaldi.service.AcessoService;
 import junit.framework.TestCase;
 
 @SpringBootTest(classes = LojaVirtualApplication.class)
