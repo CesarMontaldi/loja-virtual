@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,6 +47,8 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 			for (ObjectError objectError : errorList) {
 				message += objectError.getDefaultMessage() + "\n";
 			}
+		} if (ex instanceof HttpMessageNotReadableException) {
+			message = "Não está sendo enivado dados para o BODY corpo da requisição";
 		} else {
 			message = ex.getMessage();
 		}

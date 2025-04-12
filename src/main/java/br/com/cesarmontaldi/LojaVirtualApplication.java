@@ -18,8 +18,6 @@ public class LojaVirtualApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LojaVirtualApplication.class, args);
-		
-		//System.out.println(new BCryptPasswordEncoder().encode("123456"));
 	}
 
 }

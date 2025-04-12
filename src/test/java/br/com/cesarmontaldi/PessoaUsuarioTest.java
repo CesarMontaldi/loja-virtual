@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.com.cesarmontaldi.model.PessoaFisica;
+import br.com.cesarmontaldi.controller.PessoaController;
 import br.com.cesarmontaldi.model.PessoaJuridica;
 import br.com.cesarmontaldi.repository.PessoaRepository;
 import br.com.cesarmontaldi.service.PessoaUserService;
@@ -13,11 +13,9 @@ import junit.framework.TestCase;
 @SpringBootTest(classes = LojaVirtualApplication.class)
 public class PessoaUsuarioTest extends TestCase {
 	
-	@Autowired
-	private PessoaUserService pessoaUserService;
 	
 	@Autowired
-	private PessoaRepository pessoaRepository;
+	private PessoaController pessoaController;
 	
 	
 	@Test
@@ -34,7 +32,7 @@ public class PessoaUsuarioTest extends TestCase {
 		pessoaJuridica.setNomeFantasia("Lanchonete do Carlão");
 		pessoaJuridica.setRazaoSocial("Carlos Andrade ME");
 		
-		pessoaRepository.save(pessoaJuridica);
+		pessoaController.salvarPessoaJuridica(pessoaJuridica);
 		
 
 //		PessoaFisica pessoaFisica = new PessoaFisica();
