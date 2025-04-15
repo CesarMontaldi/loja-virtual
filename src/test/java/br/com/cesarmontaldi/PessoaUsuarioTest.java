@@ -34,12 +34,5 @@ public class PessoaUsuarioTest extends TestCase {
 		
 		pessoaController.salvarPessoaJuridica(pessoaJuridica);
 		
-
-//		PessoaFisica pessoaFisica = new PessoaFisica();
-//		
-//		pessoaFisica.setCpf("355.124.028.03");
-//		pessoaFisica.setNome("César Montaldi");
-//		pessoaFisica.setEmail("guto@gmail.com");
-//		pessoaFisica.setTelefone("(19)9 9646-9607");
 	}
 }
