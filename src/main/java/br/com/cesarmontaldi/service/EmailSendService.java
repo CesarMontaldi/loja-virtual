@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ServiceSendEmail {
+public class EmailSendService {
 	
 	@Value("${application.mail.username}")
 	private String userName;
@@ -26,7 +26,7 @@ public class ServiceSendEmail {
 	private String password;
 	
 	@Async
-	public void sendEmailHtml(String assunto, String menssagem, String emailDestino) throws UnsupportedEncodingException, MessagingException {
+	public void sendEmailHtml(String assunto, String menssagem, String emailDestino) {
 		
 		Properties properties = new Properties();
 		properties.put("mail.smtp.ssl.trust", "*");
@@ -46,15 +46,20 @@ public class ServiceSendEmail {
 		
 		session.setDebug(true);
 		
-		Address[] toUser = InternetAddress.parse(emailDestino);
-		
-		Message message = new MimeMessage(session);
-		message.setFrom(new InternetAddress(userName, "César Montaldi", "UTF-8"));
-		message.setRecipients(Message.RecipientType.TO, toUser);
-		message.setSubject(assunto);
-		message.setContent(menssagem, "text/html; charset=utf-8");
-		
-		Transport.send(message);
+		try {
+			Address[] toUser = InternetAddress.parse(emailDestino);
+			
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(userName, "César Montaldi", "UTF-8"));
+			message.setRecipients(Message.RecipientType.TO, toUser);
+			message.setSubject(assunto);
+			message.setContent(menssagem, "text/html; charset=utf-8");
+			
+			Transport.send(message);
+		}
+		catch (UnsupportedEncodingException | MessagingException ex) {
+			ex.printStackTrace();
+		}
 	}
 }
 

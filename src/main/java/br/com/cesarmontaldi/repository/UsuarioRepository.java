@@ -1,5 +1,7 @@
 package br.com.cesarmontaldi.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,7 +29,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "insert into usuarios_acesso(usuario_id, acesso_id) values (?1, (select id from acesso where descricao = 'ROLE_USER'))", nativeQuery = true)
-	void insereAcessoUserPJ(Long id);
+	@Query(value = "insert into usuarios_acesso(usuario_id, acesso_id) values (?1, (select id from acesso where descricao = ?2 limit 1))", nativeQuery = true)
+	void insereAcessoUserPJ(Long id, String acesso);
+	
+	@Query(value = "select u from Usuario u where u.dataAtualSenha <= current_date - 90")
+	List<Usuario> userPasswordExpired();
 
 }
