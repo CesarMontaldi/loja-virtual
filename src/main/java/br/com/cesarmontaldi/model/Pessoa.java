@@ -19,6 +19,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -31,9 +34,11 @@ public abstract class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pessoa")
 	private Long id;
 	
+	@NotBlank(message = "Nome deve ser informado")
 	@Column(nullable = false)
 	private String nome;
 	
+	@Email(message = "Informe um e-mail valido")
 	@Column(nullable = false)
 	private String email;
 	

@@ -1,5 +1,7 @@
 package br.com.cesarmontaldi.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class PessoaFisicaController {
 	
 	@ResponseBody
 	@PostMapping("/salvarPessoaFisica")
-	public ResponseEntity<PessoaFisica> salvarPessoaFisica(@RequestBody PessoaFisica pessoaFisica) {
+	public ResponseEntity<PessoaFisica> salvarPessoaFisica(@Valid @RequestBody PessoaFisica pessoaFisica) {
 		
 		PessoaFisica pessoaPF = pessoaFisicaService.salvar(pessoaFisica);
 		

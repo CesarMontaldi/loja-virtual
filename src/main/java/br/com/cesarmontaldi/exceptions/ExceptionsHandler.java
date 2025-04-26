@@ -42,14 +42,18 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 		
 		
 		if (ex instanceof MethodArgumentNotValidException) {
-			List<ObjectError> errorList = ((MethodArgumentNotValidException) ex).getBindingResult().getAllErrors();
+			List<ObjectError> errorList = ((MethodArgumentNotValidException) ex).getBindingResult().getAllErrors(); 
 			
 			for (ObjectError objectError : errorList) {
-				message += objectError.getDefaultMessage() + "\n";
+				message += objectError.getDefaultMessage() + " \n";
 			}
-		} if (ex instanceof HttpMessageNotReadableException) {
+		} 
+		
+		else if (ex instanceof HttpMessageNotReadableException) {
 			message = "Não está sendo enivado dados para o BODY corpo da requisição";
-		} else {
+		} 
+		
+		else {
 			message = ex.getMessage();
 		}
 		
