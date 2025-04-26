@@ -10,15 +10,16 @@ import org.springframework.stereotype.Service;
 import br.com.cesarmontaldi.exceptions.LojaVirtualException;
 import br.com.cesarmontaldi.model.PessoaJuridica;
 import br.com.cesarmontaldi.model.Usuario;
-import br.com.cesarmontaldi.repository.PessoaRepository;
+import br.com.cesarmontaldi.repository.PessoaJuridicaRepository;
 import br.com.cesarmontaldi.repository.UsuarioRepository;
 import br.com.cesarmontaldi.util.GeneratePassword;
+import br.com.cesarmontaldi.util.ValidaCNPJ;
 
 @Service
 public class PessoaJuridicaService {
 	
 	@Autowired
-	private PessoaRepository pessoaRepository;
+	private PessoaJuridicaRepository pessoaRepository;
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
@@ -38,6 +39,14 @@ public class PessoaJuridicaService {
 		
 		if (pessoaJuridica.getId() == null && pessoaRepository.existsCnpjCadastrado(pessoaJuridica.getCnpj()) != null) {
 			throw new LojaVirtualException("Ja existe CNPJ cadastrado com o numero: " + pessoaJuridica.getCnpj());
+		}
+		
+		if (pessoaJuridica.getId() == null && pessoaRepository.existsInscricaoEstadualCadastrada(pessoaJuridica.getInscricaoEstadual()) != null) {
+			throw new LojaVirtualException("Ja existe Inscricao Estadual cadastrada com o numero: " + pessoaJuridica.getInscricaoEstadual());
+		}
+		
+		if (!ValidaCNPJ.isCNPJ(pessoaJuridica.getCnpj())) {
+			throw new LojaVirtualException("CNPJ: " + pessoaJuridica.getCnpj() + " esta invalido.");
 		}
 		
 		for (int i = 0; i < pessoaJuridica.getEnderecos().size(); i++) {

@@ -12,7 +12,7 @@ import br.com.cesarmontaldi.model.PessoaJuridica;
 import br.com.cesarmontaldi.service.PessoaJuridicaService;
 
 @RestController
-public class PessoaController {
+public class PessoaJuridicaController {
 	
 	@Autowired
 	private PessoaJuridicaService pessoaJuridicaService;
