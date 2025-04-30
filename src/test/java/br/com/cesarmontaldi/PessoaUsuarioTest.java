@@ -1,9 +1,7 @@
 package br.com.cesarmontaldi;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -58,11 +56,11 @@ public class PessoaUsuarioTest extends TestCase {
 		
 		PessoaFisica pessoaFisica = new PessoaFisica();
 		
-		pessoaFisica.setCpf("636.211.720-41");
-		pessoaFisica.setNome("Rafaela Barros");
-		pessoaFisica.setEmail("rafa@hotmail.com");
-		pessoaFisica.setTelefone("(19)9 8312-0074");
-		pessoaFisica.setDataNascimento(Date.from(LocalDate.of(1987, 5, 13).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		pessoaFisica.setCpf("522.790.750-16");
+		pessoaFisica.setNome("Renato Braga");
+		pessoaFisica.setEmail("renato.braga@hotmail.com.br");
+		pessoaFisica.setTelefone("(19)9 9954-6578");
+		pessoaFisica.setDataNascimento(Date.from(LocalDate.of(1977, 8, 22).atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		pessoaFisica.setTipoPessoa("FISICA");
 		pessoaFisica.setEmpresa(pessoaJuridica);
 		
@@ -76,6 +74,8 @@ public class PessoaUsuarioTest extends TestCase {
 		endereco.setTipoEndereco(TipoEndereco.COBRANCA);
 		endereco.setPessoa(pessoaFisica);
 		endereco.setEmpresa(pessoaJuridica);
+		
+		pessoaFisicaController.salvarPessoaFisica(pessoaFisica);
 		
 		pessoaFisicaController.salvarPessoaFisica(pessoaFisica);
 		
