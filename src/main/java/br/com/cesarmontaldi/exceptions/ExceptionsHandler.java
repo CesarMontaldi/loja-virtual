@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,9 +21,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.cesarmontaldi.model.dto.ErrorResponse;
+import br.com.cesarmontaldi.service.EmailSendService;
 
 @RestControllerAdvice
 public class ExceptionsHandler extends ResponseEntityExceptionHandler {
+	
+	@Autowired
+	private EmailSendService emailService;
 	
 	@ExceptionHandler(LojaVirtualException.class)
 	public ResponseEntity<Object> handleExceptionCustom(LojaVirtualException ex) {
@@ -60,6 +66,9 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 		ErrorResponse errorResponse = new ErrorResponse(message, status.value());
 	
 		ex.printStackTrace();
+
+		emailService.sendEmailHtml("Erro na loja virtual", ExceptionUtils.getStackTrace(ex), "guto_montaldi@yahoo.com.br");
+		
 		
 		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -95,6 +104,8 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 		ErrorResponse errorResponse = new ErrorResponse(message, HttpStatus.INTERNAL_SERVER_ERROR.value());
 		
 		ex.printStackTrace();
+		
+		emailService.sendEmailHtml("Erro na loja virtual", ExceptionUtils.getStackTrace(ex), "guto_montaldi@yahoo.com.br");
 		
 		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 		

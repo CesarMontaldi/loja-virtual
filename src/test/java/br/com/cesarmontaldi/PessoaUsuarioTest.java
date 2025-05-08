@@ -14,6 +14,7 @@ import br.com.cesarmontaldi.enums.TipoEndereco;
 import br.com.cesarmontaldi.model.Endereco;
 import br.com.cesarmontaldi.model.PessoaFisica;
 import br.com.cesarmontaldi.model.PessoaJuridica;
+import br.com.cesarmontaldi.repository.PessoaFisicaRepository;
 import br.com.cesarmontaldi.repository.PessoaJuridicaRepository;
 import junit.framework.TestCase;
 
@@ -29,6 +30,9 @@ public class PessoaUsuarioTest extends TestCase {
 	
 	@Autowired
 	private PessoaJuridicaRepository pessoaJuridicaRepository;
+	
+	@Autowired
+	private PessoaFisicaRepository pessoaFisicaRepository;
 	
 	
 	@Test
@@ -52,7 +56,7 @@ public class PessoaUsuarioTest extends TestCase {
 	@Test
 	public void cadastrarPessoaFisica() {
 		
-		PessoaJuridica pessoaJuridica = pessoaJuridicaRepository.existsCnpjCadastrado("19.370.390/0001-10");
+		PessoaJuridica pessoaJuridica = pessoaJuridicaRepository.consultaPorCnpj("19.370.390/0001-10");
 		
 		PessoaFisica pessoaFisica = new PessoaFisica();
 		
@@ -79,5 +83,12 @@ public class PessoaUsuarioTest extends TestCase {
 		
 		pessoaFisicaController.salvarPessoaFisica(pessoaFisica);
 		
+	}
+	
+	@Test
+	public void consultaCpf() {
+		if (pessoaFisicaRepository.existsByCpf("522.790.750-16")) {
+			System.out.println("Olá");
+		}
 	}
 }
