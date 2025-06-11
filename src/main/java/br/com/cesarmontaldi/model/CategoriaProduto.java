@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.com.cesarmontaldi.model.dto.CategoriaProdutoDTO;
+
 @Entity
 @Table(name = "categoria_produto")
 @SequenceGenerator(name = "seq_categoria_produto", sequenceName = "seq_categoria_produto", allocationSize = 1, initialValue = 1)
@@ -31,8 +33,9 @@ public class CategoriaProduto implements Serializable {
 	
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
-	private Pessoa empresa;
-	
+	private PessoaJuridica empresa;
+
+
 	public Long getId() {
 		return id;
 	}
@@ -49,11 +52,11 @@ public class CategoriaProduto implements Serializable {
 		this.nomeDescricao = nomeDescricao;
 	}
 	
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 
@@ -61,6 +64,8 @@ public class CategoriaProduto implements Serializable {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -72,6 +77,5 @@ public class CategoriaProduto implements Serializable {
 			return false;
 		CategoriaProduto other = (CategoriaProduto) obj;
 		return Objects.equals(id, other.id);
-	}
-	
+	}	
 }
