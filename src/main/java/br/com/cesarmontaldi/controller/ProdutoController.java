@@ -40,7 +40,7 @@ public class ProdutoController {
 	}
 	
 	@GetMapping("/buscarProdutoNome/{nome}")
-	public ResponseEntity<List<Produto>> buscarCategoriaDescricao(@PathVariable String nome) {
+	public ResponseEntity<List<Produto>> buscarProdutoNome(@PathVariable String nome) {
 		
 		List<Produto> produtos = produtoService.buscarPorNome(nome.toUpperCase());
 		
@@ -48,7 +48,7 @@ public class ProdutoController {
 	} 
 
 	@DeleteMapping("/deletarProduto/{idProduto}")
-	public ResponseEntity<?> deleteCategoria(@PathVariable Long idProduto) {
+	public ResponseEntity<?> deletar(@PathVariable Long idProduto) {
 		
 		produtoService.deletar(idProduto);
 		

@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "marca_produto")
@@ -25,12 +26,13 @@ public class MarcaProduto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_marca_produto")
 	private Long id;
 	
+	@NotBlank(message = "Nome da Marca deve ser informado!")
 	@Column(nullable = false)
 	private String nomeDescricao;
 	
 	@ManyToOne(targetEntity = Pessoa.class)
 	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_fk"))
-	private Pessoa empresa;
+	private PessoaJuridica empresa;
 	
 
 	public Long getId() {
@@ -49,11 +51,11 @@ public class MarcaProduto implements Serializable {
 		this.nomeDescricao = nomeDescricao;
 	}
 	
-	public Pessoa getEmpresa() {
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 	
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 	
