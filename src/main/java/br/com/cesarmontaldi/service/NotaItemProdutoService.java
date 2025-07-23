@@ -22,15 +22,15 @@ public class NotaItemProdutoService {
 		if (notaItem.getId() == null) {
 			
 			if (notaItem.getProduto() == null || notaItem.getProduto().getId() < 0) {
-				throw new LojaVirtualException("O produto deve ser informado.");
+				throw new LojaVirtualException("O produto deve ser informado.", statusCode = 422);
 			}
 			
 			if (notaItem.getNotaFiscalCompra() == null || notaItem.getNotaFiscalCompra().getId() < 0) {
-				throw new LojaVirtualException("A nota fiscal deve ser informada.");
+				throw new LojaVirtualException("A nota fiscal deve ser informada.", statusCode = 422);
 			}
 			
 			if (notaItem.getEmpresa() == null || notaItem.getEmpresa().getId() < 0) {
-				throw new LojaVirtualException("A empresa deve ser informada.");
+				throw new LojaVirtualException("A empresa deve ser informada.", statusCode = 422);
 			}
 			
 			List<NotaItemProduto> notaExistente = repository
@@ -41,7 +41,7 @@ public class NotaItemProdutoService {
 		}
 		
 		if (notaItem.getQuantidade() <= 0) {
-			throw new LojaVirtualException("A quantidade do produto deve ser informada.");
+			throw new LojaVirtualException("A quantidade do produto deve ser informada.", statusCode = 422);
 		}
 		
 		return repository.save(notaItem);

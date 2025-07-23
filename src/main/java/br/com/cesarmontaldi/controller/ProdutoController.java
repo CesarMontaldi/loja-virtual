@@ -1,5 +1,6 @@
 package br.com.cesarmontaldi.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class ProdutoController {
 	
 	@ResponseBody
 	@PostMapping("/salvarProduto")
-	public ResponseEntity<Produto> salvarProduto(@RequestBody Produto produto) {
+	public ResponseEntity<Produto> salvarProduto(@RequestBody Produto produto) throws IOException {
 		
 		Produto newProduto = produtoService.salvar(produto);
 		
