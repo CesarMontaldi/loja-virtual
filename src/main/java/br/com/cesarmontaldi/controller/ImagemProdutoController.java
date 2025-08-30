@@ -39,8 +39,8 @@ public class ImagemProdutoController {
 		List<ImagemProduto> imagens = service.buscarPorImagemProduto(idProduto);
 		
 		List<ImagemProdutoDTO> imagensDTO = new ArrayList<>();
-		imagens.stream().forEach(i -> {
-			ImagemProdutoDTO imagemProdutoDTO = new ImagemProdutoDTO(i);
+		imagens.stream().forEach(imagemProduto -> {
+			ImagemProdutoDTO imagemProdutoDTO = new ImagemProdutoDTO(imagemProduto);
 			imagensDTO.add(imagemProdutoDTO);
 		});
 		

@@ -22,6 +22,8 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
